@@ -3,6 +3,7 @@ import { Todo } from "./models";
 
 import TodoList from "./components/TodoList";
 import NewTodo from "./components/NewTodo";
+import { idText } from "typescript";
 
 const App: React.FC = () => {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -15,10 +16,16 @@ const App: React.FC = () => {
         ]);
     };
 
+    const toDeleteHandler = (todoId: string) => {
+        setTodos(prevTodos => {
+            return prevTodos.filter(todo => todo.id !== todoId);
+        });
+    };
+
     return (
         <div className="App">
             <NewTodo onAddTodo={todoAddHandler} />
-            <TodoList items={todos} />
+            <TodoList items={todos} onDeleteTodo={toDeleteHandler} />
         </div>
     );
 };
